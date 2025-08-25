@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GM Troll Tower - Promosi</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 30px; }
+    h1 { color: #4CAF50; }
+    button { margin: 10px; padding: 10px 20px; cursor: pointer; }
+    .review-box { margin-top: 20px; }
+    textarea { width: 80%; height: 100px; }
+    .review-item { background:#f1f1f1; padding:8px; margin:5px auto; width:80%; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <h1>🎮 GM Troll Tower 🎮</h1>
+  <p id="desc">Game Roblox penuh tantangan dan seru! Yuk coba sekarang.</p>
+  
+  <!-- Tombol Bahasa -->
+  <div>
+    <button onclick="setLanguage('id')">Indonesia</button>
+    <button onclick="setLanguage('en')">English</button>
+  </div>
+  
+  <!-- Link Game & Discord -->
+  <p>
+    <a id="linkGame" href="https://www.roblox.com/games/88727014771958/GM-troll-tower" target="_blank">
+      👉 Mainkan GM Troll Tower di Roblox
+    </a>
+  </p>
+  <p>
+    <a id="linkDiscord" href="https://discord.gg/pakgm" target="_blank">
+      💬 Join Discord GM Squad
+    </a>
+  </p>
+
+  <!-- Review -->
+  <div class="review-box">
+    <h3 id="reviewTitle">Tulis Review Kamu</h3>
+    <textarea id="reviewInput" placeholder="Tulis pengalaman mainmu..."></textarea><br>
+    <button id="sendBtn" onclick="submitReview()">Kirim</button>
+    <div id="reviews"></div>
+  </div>
+
+  <script>
+    // Terjemahan
+    const texts = {
+      id: {
+        title: "🎮 GM Troll Tower 🎮",
+        desc: "Game Roblox penuh tantangan dan seru! Yuk coba sekarang.",
+        review: "Tulis Review Kamu",
+        placeholder: "Tulis pengalaman mainmu...",
+        send: "Kirim",
+        play: "👉 Mainkan GM Troll Tower di Roblox",
+        join: "💬 Join Discord GM Squad"
+      },
+      en: {
+        title: "🎮 GM Troll Tower 🎮",
+        desc: "A fun and challenging Roblox game! Try it now.",
+        review: "Write Your Review",
+        placeholder: "Write your experience...",
+        send: "Send",
+        play: "👉 Play GM Troll Tower on Roblox",
+        join: "💬 Join GM Squad Discord"
+      }
+    };
+
+    // Ganti Bahasa
+    function setLanguage(lang) {
+      document.querySelector("h1").innerText = texts[lang].title;
+      document.getElementById("desc").innerText = texts[lang].desc;
+      document.getElementById("reviewTitle").innerText = texts[lang].review;
+      document.getElementById("reviewInput").placeholder = texts[lang].placeholder;
+      document.getElementById("sendBtn").innerText = texts[lang].send;
+      document.getElementById("linkGame").innerText = texts[lang].play;
+      document.getElementById("linkDiscord").innerText = texts[lang].join;
+    }
+
+    // Simpan Review di Browser (localStorage)
+    function submitReview() {
+      const input = document.getElementById("reviewInput");
+      if (input.value.trim() !== "") {
+        const div = document.createElement("div");
+        div.className = "review-item";
+        div.textContent = "⭐ " + input.value;
+        document.getElementById("reviews").appendChild(div);
+
+        // Simpan ke localStorage
+        let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+        reviews.push(input.value);
+        localStorage.setItem("reviews", JSON.stringify(reviews));
+
+        input.value = "";
+      }
+    }
+
+    // Load Review dari localStorage
+    window.onload = function() {
+      let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      reviews.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "review-item";
+        div.textContent = "⭐ " + r;
+        document.getElementById("reviews").appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
+
+
